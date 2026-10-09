@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Análisis rápido del dataset — Predicción de Y</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#182230;--muted:#627084;--accent:#315ee8;--line:#e3e9f2;--good:#147d64;--warn:#9a5b00}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+main{max-width:1100px;margin:auto;padding:32px 20px 56px}header{background:linear-gradient(135deg,#172554,#315ee8);color:#fff;padding:30px;border-radius:22px;margin-bottom:22px}
+header p{color:#e1e9ff;max-width:760px}h1{font-size:clamp(1.8rem,4vw,2.7rem);line-height:1.12;margin:0 0 12px}h2{font-size:1.25rem;margin:0 0 14px}h3{font-size:1rem;margin:0 0 8px}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 4px 16px #12213b08}.metric{font-size:1.8rem;font-weight:750;letter-spacing:-.03em}.muted{color:var(--muted);font-size:.92rem}.section{margin-top:18px}.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}.barline{display:grid;grid-template-columns:72px 1fr 54px;align-items:center;gap:10px;margin:14px 0}.track{height:12px;background:#e8edf6;border-radius:99px;overflow:hidden}.fill{height:100%;border-radius:99px;background:var(--accent)}.fill.yes{background:#1c9b79}table{width:100%;border-collapse:collapse;font-size:.93rem}th,td{padding:11px 10px;text-align:left;border-bottom:1px solid var(--line)}th{color:var(--muted);font-weight:650}code{background:#f0f3f9;padding:2px 5px;border-radius:5px}.pill{display:inline-block;border-radius:99px;padding:4px 9px;background:#e9efff;color:#2347b8;font-size:.82rem;font-weight:650}.warning{border-left:4px solid #e7a12b;background:#fff8e9}.good{color:var(--good)}.matrix{display:grid;grid-template-columns:1fr 1fr;gap:8px}.matrix div{background:#f5f7fb;border-radius:10px;padding:12px}.matrix b{display:block;font-size:1.25rem}.footer{margin-top:20px;color:var(--muted);font-size:.85rem}@media(max-width:760px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.split{grid-template-columns:1fr}main{padding:18px 12px 36px}header{padding:23px}.metric{font-size:1.5rem}}@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}table{font-size:.8rem}th,td{padding:8px 5px}}
+</style>
+</head>
+<body><main>
+<header>
+<span class="pill">ANÁLISIS EXPLORATORIO + MODELO</span>
+<h1>Predicción de Y con 4 características</h1>
+<p>Informe rápido de <strong>dataset_selectkbest.csv</strong>. Se entrena una regresión logística para clasificar la variable objetivo <code>y</code> como <code>yes</code> o <code>no</code>.</p>
+</header>
+
+<div class="grid">
+ <section class="card"><div class="muted">Registros</div><div class="metric">41,188</div><div class="muted">filas en el dataset</div></section>
+ <section class="card"><div class="muted">Características</div><div class="metric">4</div><div class="muted">variables predictoras</div></section>
+ <section class="card"><div class="muted">Objetivo positivo</div><div class="metric">11.3%</div><div class="muted">4,640 casos con y = yes</div></section>
+ <section class="card"><div class="muted">Valores faltantes</div><div class="metric">0</div><div class="muted">celdas vacías detectadas</div></section>
+</div>
+
+<div class="split section">
+<section class="card">
+<h2>1. Distribución de Y</h2>
+<p class="muted">La clase <code>no</code> predomina, así que la exactitud por sí sola puede resultar engañosa.</p>
+<div class="barline"><span>no</span><div class="track"><div class="fill" style="width:88.7346%"></div></div><strong>88.7%</strong></div>
+<div class="barline"><span>yes</span><div class="track"><div class="fill yes" style="width:11.2654%"></div></div><strong>11.3%</strong></div>
+</section>
+<section class="card">
+<h2>2. Características seleccionadas</h2>
+<ul>
+<li><code>duration</code>: duración del contacto/llamada.</li>
+<li><code>pdays</code>: días desde un contacto previo; en este dataset, 999 suele representar que no hubo contacto previo.</li>
+<li><code>euribor3m</code>: tasa Euribor a 3 meses.</li>
+<li><code>nr.employed</code>: indicador del número de empleados.</li>
+</ul>
+<p class="muted">La interpretación exacta depende del diccionario de datos original.</p>
+</section>
+</div>
+
+<section class="card section">
+<h2>3. Estadísticas descriptivas</h2>
+<div style="overflow-x:auto"><table><thead><tr><th>Variable</th><th>Media</th><th>Desv. estándar</th><th>Mínimo</th><th>Máximo</th></tr></thead><tbody><tr><td><code>duration</code></td><td>258.285</td><td>259.279</td><td>0.000</td><td>4,918.000</td></tr><tr><td><code>pdays</code></td><td>962.475</td><td>186.911</td><td>0.000</td><td>999.000</td></tr><tr><td><code>euribor3m</code></td><td>3.621</td><td>1.734</td><td>0.634</td><td>5.045</td></tr><tr><td><code>nr.employed</code></td><td>5,167.036</td><td>72.252</td><td>4,963.600</td><td>5,228.100</td></tr></tbody></table></div>
+</section>
+
+<section class="card section">
+<h2>4. Modelo y evaluación</h2>
+<p>Modelo: <strong>regresión logística</strong>, con estandarización de las variables. División de datos: 80% entrenamiento y 20% prueba, estratificada y con semilla 42.</p>
+<div class="grid">
+ <div><div class="muted">Accuracy</div><div class="metric">91.0%</div></div>
+ <div><div class="muted">Precision (yes)</div><div class="metric">68.3%</div></div>
+ <div><div class="muted">Recall (yes)</div><div class="metric">37.2%</div></div>
+ <div><div class="muted">ROC-AUC</div><div class="metric">0.928</div></div>
+</div>
+<p><strong>F1-score:</strong> 0.482. El AUC resume la capacidad de ordenar casos positivos por encima de negativos a través de distintos umbrales; no significa que el 92.8% de las predicciones sean correctas.</p>
+<h3>Matriz de confusión (con umbral 0.5)</h3>
+<div class="matrix">
+<div>Verdaderos negativos (no → no)<b>7,150</b></div>
+<div>Falsos positivos (no → yes)<b>160</b></div>
+<div>Falsos negativos (yes → no)<b>583</b></div>
+<div>Verdaderos positivos (yes → yes)<b>345</b></div>
+</div>
+</section>
+
+<section class="card section warning">
+<h2>5. Advertencia importante antes de usarlo</h2>
+<p><strong><code>duration</code> puede introducir fuga de información para una predicción previa a la llamada.</strong> Si el objetivo es decidir antes de contactar al cliente, esta característica todavía no se conoce y puede inflar el rendimiento aparente. Conviene entrenar una segunda versión sin <code>duration</code> y comparar resultados.</p>
+<p>Además, este análisis usa una partición aleatoria; no sustituye una validación temporal ni una evaluación en datos nuevos.</p>
+</section>
+<section class="card section">
+<h2>Conclusión rápida</h2>
+<p>Las cuatro variables permiten construir una línea base para predecir <code>y</code>. El modelo obtiene accuracy de <strong>91.0%</strong> y ROC-AUC de <strong>0.928</strong>, pero su recall para la clase positiva es <strong>37.2%</strong>: con el umbral actual detecta solo una parte de los casos <code>yes</code>. Si la prioridad es encontrar más positivos, se puede ajustar el umbral o probar otros modelos, evaluando el coste de los falsos positivos.</p>
+</section>
+<p class="footer">Generado automáticamente a partir del CSV proporcionado. Modelo de referencia; no constituye una garantía de rendimiento futuro.</p>
+</main></body></html>
